@@ -20,7 +20,7 @@ const Header = () => {
   };
   useEffect(
     () => {
-      onAuthStateChanged(auth, (user) => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
           const { uid, email, displayName, photoURL } = user;
           dispatch(
@@ -37,7 +37,9 @@ const Header = () => {
           navigate("/");
         }
       });
+      return () => unsubscribe(); // removing the listener when the header component is unmounted
     },
+
     // eslint-disable-next-line
     []
   );
@@ -47,7 +49,11 @@ const Header = () => {
       <img src={LOGO} alt="logo" className="w-44" />
       {user && (
         <div className="p-2">
-          <img className="w-12 h-12" src={user?.photoURL} alt="userIcon" />
+          <img
+            className="w-12 h-12 m-auto"
+            src={user?.photoURL}
+            alt="userIcon"
+          />
           <button onClick={handleSignOut} className="text-white font-bold">
             Sign Out
           </button>
