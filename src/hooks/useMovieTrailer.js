@@ -27,7 +27,9 @@ const useMovieTrailer = (movieId) => {
   };
   useEffect(() => {
     getTrailerOfMovie(movieId);
-  }, []);
+  },
+    // eslint-disable-next-line
+    []);
 };
 
 export default useMovieTrailer;
