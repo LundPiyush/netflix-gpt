@@ -6,11 +6,11 @@ const gptSlice = createSlice({
     showGptSearch: false,
   },
   reducers: {
-    toggleGptSearch: (state) => {
+    toggleGptSearchView: (state) => {
       state.showGptSearch = !state.showGptSearch;
     },
   },
 });
 
-export const { toggleGptSearch } = gptSlice.actions;
+export const { toggleGptSearchView } = gptSlice.actions;
 export default gptSlice.reducer;
