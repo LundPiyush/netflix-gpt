@@ -11,7 +11,6 @@ const SecondaryContainer = () => {
     !movies?.trendingMovies?.length
   )
     return null;
-  console.log("trending", movies?.trendingMovies);
   return (
     <div className="bg-black">
       <div className="-mt-64 relative z-20 pl-6">

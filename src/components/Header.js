@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { LOGO } from "../utils/constants";
+import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {})
@@ -22,6 +24,10 @@ const Header = () => {
   const handleGptSearchClick = () => {
     // toggle Gpt search
     dispatch(toggleGptSearchView());
+  };
+  const handleLanguageChange = (e) => {
+    // change language
+    dispatch(changeLanguage(e.target.value));
   };
   useEffect(
     () => {
@@ -54,8 +60,19 @@ const Header = () => {
       <img src={LOGO} alt="logo" className="w-44" />
       {user && (
         <div className="p-2 flex justify-between items-center">
+          {showGptSearch && (
+            <select
+              className="bg-black text-white font-bold py-2 px-4 rounded-lg focus:outline-none m-2"
+              onChange={handleLanguageChange}>
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
           <button className="py-2 px-4 mx-4 my-2 text-white bg-purple-500" onClick={handleGptSearchClick}>
-            GPT Search
+            {showGptSearch ? "Homepage" : "GPT Search"}
           </button>
           <img className="w-12 h-12 m-auto" src={user?.photoURL} alt="userIcon" />
           <button onClick={handleSignOut} className="text-white font-bold">
