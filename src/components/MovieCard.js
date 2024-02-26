@@ -1,6 +1,7 @@
 import React from "react";
 
 const MovieCard = ({ posterPath }) => {
+  if (!posterPath) return null;
   return (
     <div className="pr-4 w-48">
       <img
