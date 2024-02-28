@@ -58,8 +58,10 @@ const GptSearchBar = () => {
   };
   const language = useSelector((store) => store.config.language);
   return (
-    <div className="pt-[10%] flex justify-center">
-      <form className="bg-black  w-1/2 grid grid-cols-12" onSubmit={(e) => e.preventDefault()}>
+    <div className="pt-[35%] md:pt-[10%] flex justify-center">
+      <form
+        className="bg-black w-full flex flex-col md:w-1/2 md:grid md:grid-cols-12"
+        onSubmit={(e) => e.preventDefault()}>
         <input
           type="text"
           placeholder={lang[language].gptSearchPlaceholder}

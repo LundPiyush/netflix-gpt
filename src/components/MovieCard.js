@@ -3,7 +3,7 @@ import React from "react";
 const MovieCard = ({ posterPath }) => {
   if (!posterPath) return null;
   return (
-    <div className="pr-4 w-48">
+    <div className="pr-4 w-36 md:w-48">
       <img
         // src = {IMG_BASE_URL + posterPath}
         src="https://m.media-amazon.com/images/M/MV5BZWIyNzE3NzEtMGExNS00ZjRkLWJmMTYtMWFlNTNkNDgyNWUzXkEyXkFqcGdeQXVyODUwMzI5ODk@._V1_.jpg"
