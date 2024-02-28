@@ -13,7 +13,7 @@ const useTrendingMovies = () => {
   };
   useEffect(
     () => {
-      !trendingMovies && getTrendingMovies();
+      !trendingMovies.length && getTrendingMovies();
     }, // eslint-disable-next-line
     []
   );

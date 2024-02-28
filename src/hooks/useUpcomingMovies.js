@@ -14,7 +14,7 @@ const useUpcomingMovies = () => {
   };
   useEffect(
     () => {
-      !upcomingMovies && getUpcomingMovies();
+      !upcomingMovies.length && getUpcomingMovies();
     },
     // eslint-disable-next-line
     []
