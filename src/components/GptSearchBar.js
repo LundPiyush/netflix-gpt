@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import lang from "../utils/langConstants";
 import { useDispatch, useSelector } from "react-redux";
-import openai from "../utils/openAI";
+//import openai from "../utils/openAI";
 import { API_OPTIONS, BARD_KEY } from "../utils/constants";
 import { addGptMovieResults } from "../utils/gptSlice";
 const { GoogleGenerativeAI } = require("@google/generative-ai");
