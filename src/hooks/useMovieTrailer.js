@@ -16,7 +16,7 @@ const useMovieTrailer = (movieId) => {
       const movieTrailer = movieTrailersList.length ? movieTrailersList[0] : allMovieVideos?.results[0];
       dispatch(addTrailerVideo(movieTrailer));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   useEffect(
