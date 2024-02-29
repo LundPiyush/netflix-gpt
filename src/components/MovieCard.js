@@ -1,12 +1,14 @@
 import React from "react";
+import { IMG_CDN_URL } from "../utils/constants";
 
 const MovieCard = ({ posterPath }) => {
   if (!posterPath) return null;
+  console.log(posterPath);
   return (
     <div className="pr-4 w-36 md:w-48">
       <img
-        // src = {IMG_BASE_URL + posterPath}
-        src="https://m.media-amazon.com/images/M/MV5BZWIyNzE3NzEtMGExNS00ZjRkLWJmMTYtMWFlNTNkNDgyNWUzXkEyXkFqcGdeQXVyODUwMzI5ODk@._V1_.jpg"
+        src={IMG_CDN_URL + posterPath}
+        //src="https://m.media-amazon.com/images/M/MV5BZWIyNzE3NzEtMGExNS00ZjRkLWJmMTYtMWFlNTNkNDgyNWUzXkEyXkFqcGdeQXVyODUwMzI5ODk@._V1_.jpg"
         alt="movie"
       />
     </div>
