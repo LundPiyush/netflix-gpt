@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 const SecondaryContainer = () => {
   const movies = useSelector((store) => store.movies);
   if (
-    !movies?.nowPlayingMovies.length ||
-    !movies?.popularMovies.length ||
-    !movies?.upcomingMovies.length ||
+    !movies?.nowPlayingMovies?.length ||
+    !movies?.popularMovies?.length ||
+    !movies?.upcomingMovies?.length ||
     !movies?.trendingMovies?.length
   )
     return null;
