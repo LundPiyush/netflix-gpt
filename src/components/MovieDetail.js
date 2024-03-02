@@ -19,9 +19,9 @@ const MovieDetail = () => {
     original_title,
     title,
     overview,
-    //backdrop_path,
+    backdrop_path,
     //imdb_id,
-    poster_path,
+    //poster_path,
     release_date,
     tagline,
     runtime,
@@ -32,7 +32,7 @@ const MovieDetail = () => {
       <img alt={id}
         className="w-screen aspect-video md:h-[750px] h-96"
         //src="https://m.media-amazon.com/images/M/MV5BZWIyNzE3NzEtMGExNS00ZjRkLWJmMTYtMWFlNTNkNDgyNWUzXkEyXkFqcGdeQXVyODUwMzI5ODk@._V1_.jpg"
-        src={IMG_CDN_URL + poster_path}
+        src={IMG_CDN_URL + backdrop_path}
       />
       <div className="absolute top-36 text-white flex flex-col w-full mx-10">
         <div>
