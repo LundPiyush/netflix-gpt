@@ -6,7 +6,7 @@ const CastCard = ({ id, profilePath, name, character }) => {
   return (
     <div className="mx-2 my-4 pb-4 w-36 md:w-48 flex flex-col overflow-x-hidden webkit-scrollbar bg-white transition-transform duration-450 hover:scale-105 rounded-lg">
       <img
-        className={profilePath ? "bg-gray-500" : "bg-gray-500 min-h-56"}
+        className={profilePath ? "bg-gray-500" : "bg-gray-500 min-h-[13.5rem]"}
         src={profilePath ? IMG_CDN_URL + profilePath : user_image}
         //src={user_image}
         alt={"cast" + id}
