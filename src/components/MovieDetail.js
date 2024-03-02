@@ -36,13 +36,19 @@ const MovieDetail = () => {
           //src="https://m.media-amazon.com/images/M/MV5BZWIyNzE3NzEtMGExNS00ZjRkLWJmMTYtMWFlNTNkNDgyNWUzXkEyXkFqcGdeQXVyODUwMzI5ODk@._V1_.jpg"
           src={IMG_CDN_URL + backdrop_path}
         />
-        <div className="absolute top-36 text-white flex flex-col mx-10">
+        <div className="absolute top-36 text-white flex flex-col ml-10">
           <div>
             <p className="text-2xl md:text-6xl font-bold">{original_title || title}</p>
             <div className="flex mt-4">
-              <p className="text-xs md:text-xl font-bold mr-2">{release_date} |</p>
-              <p className="text-xs md:text-xl font-bold mr-2">{genres.map((obj) => obj.name).join(", ")} | </p>
-              <p className="text-xs md:text-xl font-bold mr-2">{formatTime(runtime)}</p>
+              <p className="text-sm md:text-xl font-bold mr-2">{release_date} |</p>
+              <p className="text-sm md:text-xl font-bold mr-2">
+                {genres
+                  .map((obj) => obj.name)
+                  .slice(0, 3)
+                  .join(", ")}{" "}
+                |
+              </p>
+              <p className="text-sm md:text-xl font-bold mr-2">{formatTime(runtime)}</p>
             </div>
             <div className="flex my-4">
               <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
