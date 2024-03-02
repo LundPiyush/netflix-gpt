@@ -17,6 +17,8 @@ const useMovieDetails = (movieId) => {
   };
   useEffect(() => {
     getMovieDetails(movieId);
-  }, [movieId]);
+  },
+  // eslint-disable-next-line
+  [movieId]);
 };
 export default useMovieDetails;
