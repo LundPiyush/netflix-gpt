@@ -10,7 +10,7 @@ const VideoTitle = ({ title, overview, id }) => {
   };
   
   return (
-    <div className="pt-[20%] px-6 md:px-12 absolute text-white flex flex-col w-full items-center md:items-start mt-[20%] md:mt-0">
+    <div className="pt-[50%] md:pt-[20%] px-6 md:px-12 absolute text-white flex flex-col w-full items-center md:items-start mt-[20%] md:mt-0">
       <div>
         <p className="text-2xl md:text-6xl font-bold">{title}</p>
         <p className="hidden md:inline-block py-6 text-lg w-1/4">{overview}</p>
