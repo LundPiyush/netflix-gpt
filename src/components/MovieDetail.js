@@ -5,6 +5,7 @@ import useMovieDetails from "../hooks/useMovieDetails";
 import { formatTime } from "../utils/formatTime";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faBookmark, faStar, faList } from "@fortawesome/free-solid-svg-icons";
+import { IMG_CDN_URL } from "../utils/constants";
 
 const MovieDetail = () => {
   const { movieId } = useParams();
@@ -31,7 +32,7 @@ const MovieDetail = () => {
       <img alt={id}
         className="h-screen	w-screen object-cover"
         //src="https://m.media-amazon.com/images/M/MV5BZWIyNzE3NzEtMGExNS00ZjRkLWJmMTYtMWFlNTNkNDgyNWUzXkEyXkFqcGdeQXVyODUwMzI5ODk@._V1_.jpg"
-        src={poster_path}
+        src={IMG_CDN_URL + poster_path}
       />
       <div className="absolute top-36 text-white flex flex-col w-full mx-10">
         <div>
