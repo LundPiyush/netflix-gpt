@@ -30,7 +30,7 @@ const MovieDetail = () => {
   return (
     <div className="h-full w-screen relative bg-black">
       <img alt={id}
-        className="h-screen	w-screen object-cover"
+        className="w-screen aspect-video md:h-[750px] h-96"
         //src="https://m.media-amazon.com/images/M/MV5BZWIyNzE3NzEtMGExNS00ZjRkLWJmMTYtMWFlNTNkNDgyNWUzXkEyXkFqcGdeQXVyODUwMzI5ODk@._V1_.jpg"
         src={IMG_CDN_URL + poster_path}
       />
@@ -38,27 +38,27 @@ const MovieDetail = () => {
         <div>
           <p className="text-2xl md:text-6xl font-bold">{original_title || title}</p>
           <div className="flex mt-4">
-            <p className="text-lg md:text-xl font-bold mr-4">• {release_date}</p>
-            <p className="text-lg md:text-xl font-bold mr-4">• {genres.map((obj) => obj.name).join(", ")}</p>
-            <p className="text-lg md:text-xl font-bold mr-4">• {formatTime(runtime)}</p>
+            <p className="text-xs md:text-xl font-bold mr-4">• {release_date}</p>
+            <p className="text-xs md:text-xl font-bold mr-4">• {genres.map((obj) => obj.name).join(", ")}</p>
+            <p className="text-xs md:text-xl font-bold mr-4">• {formatTime(runtime)}</p>
           </div>
           <div className="flex my-4 ">
-            <button className="mr-4 bg-gray-600 rounded-full w-11 h-11">
+            <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
                 <FontAwesomeIcon icon={faList}  />
             </button>
-            <button className="mr-4 bg-gray-600 rounded-full w-11 h-11">
+            <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
               <FontAwesomeIcon icon={faHeart} />
             </button>
-            <button className="mr-4 bg-gray-600 rounded-full w-11 h-11">
+            <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
               <FontAwesomeIcon icon={faBookmark} />
             </button>
-            <button className="mr-4 bg-gray-600 rounded-full w-11 h-11">
+            <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
               <FontAwesomeIcon icon={faStar} />
             </button>
           </div>
           <p className="text-lg md:text-xl italic">{tagline}</p>
-          <div className="flex flex-col mt-4">
-            <p className="text-lg md:text-xl font-bold">Overview</p>
+          <div className="flex flex-col md:mt-4">
+            <p className="text-lg md:text-xl font-bold hidden md:inline-block">Overview</p>
             <p className="hidden md:inline-block py-2 text-lg w-2/4">{overview}</p>
           </div>
         </div>
