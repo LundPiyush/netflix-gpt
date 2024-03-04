@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useMovieDetails from "../hooks/useMovieDetails";
 import { formatTime } from "../utils/formatTime";
@@ -8,11 +8,16 @@ import { faHeart, faBookmark, faStar, faList } from "@fortawesome/free-solid-svg
 import { IMG_CDN_URL } from "../utils/constants";
 import RecommendedMovies from "./RecommendedMovies";
 import MovieCast from "./MovieCast";
+import VideoBackground from "./VideoBackground";
+import { toggleMovieTrailer } from "../utils/movieDetailsSlice";
+import Header from "./Header";
 
 const MovieDetail = () => {
+  const dispatch = useDispatch();
   const { movieId } = useParams();
   useMovieDetails(movieId);
   const movie = useSelector((store) => store.movieDetails.selectedMovie);
+  const playMovieTrailer = useSelector((store) => store.movieDetails.playMovieTrailer);
   if (!movie) return;
   const {
     id,
@@ -27,29 +32,33 @@ const MovieDetail = () => {
     runtime,
     genres,
   } = movie;
+  const handlePlayTrailer = () => {
+    dispatch(toggleMovieTrailer());
+  };
   return (
     <>
+      <Header />
       <div className="h-full w-screen relative bg-black">
-        <img
-          alt={id}
-          className="w-screen aspect-video md:h-[750px] h-96"
-          //src="https://m.media-amazon.com/images/M/MV5BZWIyNzE3NzEtMGExNS00ZjRkLWJmMTYtMWFlNTNkNDgyNWUzXkEyXkFqcGdeQXVyODUwMzI5ODk@._V1_.jpg"
-          src={IMG_CDN_URL + backdrop_path}
-        />
+        {!playMovieTrailer && (
+          <img
+            alt={id}
+            className="w-screen aspect-video md:h-[750px] h-96"
+            //src="https://m.media-amazon.com/images/M/MV5BZWIyNzE3NzEtMGExNS00ZjRkLWJmMTYtMWFlNTNkNDgyNWUzXkEyXkFqcGdeQXVyODUwMzI5ODk@._V1_.jpg"
+            src={IMG_CDN_URL + backdrop_path}
+          />
+        )}
+        {playMovieTrailer && <VideoBackground movieId={id} />}
         <div className="absolute top-36 text-white flex flex-col ml-10">
           <div>
             <p className="text-2xl md:text-6xl font-bold">{original_title || title}</p>
             <div className="flex mt-4">
               <p className="text-sm md:text-xl font-bold mr-2">{release_date} |</p>
-              <p className="text-sm md:text-xl font-bold mr-2">
-                {genres
-                  .map((obj) => obj.name)
-                  .slice(0, 3)
-                  .join(", ")}{" "}
-                |
+              <p className="text-sm md:text-xl font-bold mr-2 hidden md:inline-block">
+                {genres?.map((obj) => obj.name).join(", ")} |
               </p>
               <p className="text-sm md:text-xl font-bold mr-2">{formatTime(runtime)}</p>
             </div>
+            <p className="text-sm md:text-xl font-bold md:hidden">{genres?.map((obj) => obj.name).join(", ")} </p>
             <div className="flex my-4">
               <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
                 <FontAwesomeIcon icon={faList} />
@@ -71,8 +80,10 @@ const MovieDetail = () => {
             </div>
           </div>
           <div className="flex md:mt-6">
-            <button className="bg-white text-lg md:text-xl text-black font-bold rounded-lg px-3 md:px-12 py-2 md:py-4 hover:bg-opacity-80 mt-4 md:mt-0">
-              ▶️ Play Trailer
+            <button
+              className="bg-white text-lg md:text-xl text-black font-bold rounded-lg px-3 md:px-12 py-2 md:py-4 hover:bg-opacity-80 mt-4 md:mt-0"
+              onClick={handlePlayTrailer}>
+              {!playMovieTrailer ? "▶️ Play Trailer" : "◼︎ Stop Trailer"}
             </button>
           </div>
         </div>
