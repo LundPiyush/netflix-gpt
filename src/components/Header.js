@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
@@ -12,7 +12,9 @@ import { changeLanguage } from "../utils/configSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((store) => store.user);
+  const { pathname } = useLocation();
+
+  const user = useSelector((store) => store.user.userLoggedIn);
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const handleSignOut = () => {
     signOut(auth)
@@ -57,7 +59,9 @@ const Header = () => {
 
   return (
     <div className="w-screen absolute bg-gradient-to-b from-black px-0 md:px-8 py-2 z-10 flex flex-col md:flex-row justify-between">
-      <img src={LOGO} alt="logo" className="w-44 m-auto md:m-0" />
+      <Link to="/browse">
+        <img src={LOGO} alt="logo" className="w-44 m-auto md:m-0" />
+      </Link>
       {user && (
         <div className="p-2 flex justify-between items-center">
           {showGptSearch && (
@@ -71,9 +75,11 @@ const Header = () => {
               ))}
             </select>
           )}
-          <button className="py-2 px-4 mx-4 my-2 text-white bg-purple-500" onClick={handleGptSearchClick}>
-            {showGptSearch ? "Homepage" : "GPT Search"}
-          </button>
+          {pathname === "/browse" && (
+            <button className="py-2 px-4 mx-4 my-2 text-white bg-purple-500" onClick={handleGptSearchClick}>
+              {showGptSearch ? "Homepage" : "GPT Search"}
+            </button>
+          )}
           <div className="flex">
             <img className="w-12 h-12 m-auto hidden md:inline-block" src={user?.photoURL} alt="userIcon" />
             <button onClick={handleSignOut} className="text-white font-bold mx-2">

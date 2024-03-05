@@ -17,7 +17,7 @@ const Browse = () => {
   useTrendingMovies();
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       {/*
       MainContainer
           -VideoBackground   

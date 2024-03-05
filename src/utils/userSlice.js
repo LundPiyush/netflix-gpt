@@ -2,17 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
   name: "user",
-  initialState: null,
+  initialState: {
+    userLoggedIn: null,
+    watchList: [],
+  },
   reducers: {
     addUser: (state, action) => {
-      return action.payload;
+      state.userLoggedIn = action.payload;
     },
     removeUser: (state, action) => {
-      return null;
+      state.userLoggedIn = null;
+    },
+    addMovieInWatchList: (state, action) => {
+      state.watchList.push(action.payload);
     },
   },
 });
 
-export const { addUser, removeUser } = userSlice.actions;
+export const { addUser, removeUser, addMovieInWatchList } = userSlice.actions;
 
 export default userSlice.reducer;

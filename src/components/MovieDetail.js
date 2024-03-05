@@ -10,6 +10,7 @@ import RecommendedMovies from "./RecommendedMovies";
 import MovieCast from "./MovieCast";
 import VideoBackground from "./VideoBackground";
 import { toggleMovieTrailer } from "../utils/movieDetailsSlice";
+import { addMovieInWatchList } from "../utils/userSlice";
 
 const MovieDetail = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,12 @@ const MovieDetail = () => {
   } = movie;
   const handlePlayTrailer = () => {
     dispatch(toggleMovieTrailer());
+  };
+  const addToWatchList = () => {
+    console.log("add to watch list");
+    // add to watch list
+
+    dispatch(addMovieInWatchList(movie));
   };
   return (
     <>
@@ -64,7 +71,7 @@ const MovieDetail = () => {
               <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
                 <FontAwesomeIcon icon={faHeart} />
               </button>
-              <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
+              <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11" onClick={addToWatchList}>
                 <FontAwesomeIcon icon={faBookmark} />
               </button>
               <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
