@@ -8,9 +8,11 @@ import useUpcomingMovies from "../hooks/useUpcomingMovies";
 import useTrendingMovies from "../hooks/useTrendingMovies";
 import { useSelector } from "react-redux";
 import GptSearch from "./GptSearch";
+import MovieDetail from "./MovieDetail";
 
 const Browse = () => {
   const showGpt = useSelector((store) => store.gpt.showGptSearch);
+  const showMovieDetailPage = useSelector((store) => store.movieDetails.selectedMovie);
   useNowPlayingMovies();
   usePopularMovies();
   useUpcomingMovies();
@@ -26,7 +28,10 @@ const Browse = () => {
           - MovieList * n
               - Cards * n 
        */}
-      {showGpt ? (
+
+      {showMovieDetailPage ? (
+        <MovieDetail />
+      ) : showGpt ? (
         <GptSearch />
       ) : (
         <>

@@ -10,7 +10,6 @@ import RecommendedMovies from "./RecommendedMovies";
 import MovieCast from "./MovieCast";
 import VideoBackground from "./VideoBackground";
 import { toggleMovieTrailer } from "../utils/movieDetailsSlice";
-import Header from "./Header";
 
 const MovieDetail = () => {
   const dispatch = useDispatch();
@@ -37,7 +36,6 @@ const MovieDetail = () => {
   };
   return (
     <>
-      <Header />
       <div className="h-full w-screen relative bg-black">
         {!playMovieTrailer && (
           <img
