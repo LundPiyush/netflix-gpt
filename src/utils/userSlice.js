@@ -16,9 +16,12 @@ const userSlice = createSlice({
     addMovieInWatchList: (state, action) => {
       state.watchList.push(action.payload);
     },
+    removeMovieFromWatchList: (state, action) => {
+      state.watchList = state.watchList.filter(({ id }) => id !== Number(action.payload.id));
+    },
   },
 });
 
-export const { addUser, removeUser, addMovieInWatchList } = userSlice.actions;
+export const { addUser, removeUser, addMovieInWatchList, removeMovieFromWatchList } = userSlice.actions;
 
 export default userSlice.reducer;
