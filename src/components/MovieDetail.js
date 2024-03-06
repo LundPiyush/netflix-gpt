@@ -10,7 +10,8 @@ import RecommendedMovies from "./RecommendedMovies";
 import MovieCast from "./MovieCast";
 import VideoBackground from "./VideoBackground";
 import { toggleMovieTrailer } from "../utils/movieDetailsSlice";
-import { addMovieInWatchList } from "../utils/userSlice";
+import { addMovieInWatchList, removeMovieFromWatchList } from "../utils/userSlice";
+import { isMovieInWatchlist } from "../utils/helper";
 
 const MovieDetail = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const MovieDetail = () => {
   useMovieDetails(movieId);
   const movie = useSelector((store) => store.movieDetails.selectedMovie);
   const playMovieTrailer = useSelector((store) => store.movieDetails.playMovieTrailer);
+  const watchList = useSelector((store) => store.user.watchList);
   if (!movie) return;
   const {
     id,
@@ -36,10 +38,12 @@ const MovieDetail = () => {
     dispatch(toggleMovieTrailer());
   };
   const addToWatchList = () => {
-    console.log("add to watch list");
-    // add to watch list
-
-    dispatch(addMovieInWatchList(movie));
+    // add to watch list if movie is not present in watch list
+    if (!isMovieInWatchlist(watchList, movieId)) {
+      dispatch(addMovieInWatchList(movie));
+    } else {
+      dispatch(removeMovieFromWatchList({ id: movieId }));
+    }
   };
   return (
     <>
@@ -72,7 +76,10 @@ const MovieDetail = () => {
                 <FontAwesomeIcon icon={faHeart} />
               </button>
               <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11" onClick={addToWatchList}>
-                <FontAwesomeIcon icon={faBookmark} />
+                <FontAwesomeIcon
+                  icon={faBookmark}
+                  style={{ color: isMovieInWatchlist(watchList, movieId) ? "#E50914" : "#FFFFFF" }}
+                />
               </button>
               <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
                 <FontAwesomeIcon icon={faStar} />
