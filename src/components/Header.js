@@ -4,10 +4,10 @@ import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
+import { addUser, removeUser } from "../utils/userSlice/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
-import { toggleGptSearchView } from "../utils/gptSlice";
-import { changeLanguage } from "../utils/configSlice";
+import { toggleGptSearchView } from "../utils/gptSlice/gptSlice";
+import { changeLanguage } from "../utils/configSlice/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();

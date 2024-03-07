@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { API_OPTIONS } from "../utils/constants";
-import { addMovieDetails } from "../utils/movieDetailsSlice";
+import { addMovieDetails } from "../utils/movieDetailsSlice/movieDetailsSlice";
 import { useEffect } from "react";
 
 const useMovieDetails = (movieId) => {
@@ -15,10 +15,12 @@ const useMovieDetails = (movieId) => {
       console.error(error);
     }
   };
-  useEffect(() => {
-    getMovieDetails();
-  },
-  // eslint-disable-next-line
-  [movieId]);
+  useEffect(
+    () => {
+      getMovieDetails();
+    },
+    // eslint-disable-next-line
+    [movieId]
+  );
 };
 export default useMovieDetails;

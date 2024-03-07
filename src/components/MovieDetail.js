@@ -9,8 +9,8 @@ import { IMG_CDN_URL } from "../utils/constants";
 import RecommendedMovies from "./RecommendedMovies";
 import MovieCast from "./MovieCast";
 import VideoBackground from "./VideoBackground";
-import { toggleMovieTrailer } from "../utils/movieDetailsSlice";
-import { addMovieInWatchList, removeMovieFromWatchList } from "../utils/userSlice";
+import { toggleMovieTrailer } from "../utils/movieDetailsSlice/movieDetailsSlice";
+import { addMovieInWatchList, removeMovieFromWatchList } from "../utils/userSlice/userSlice";
 import { isMovieInWatchlist } from "../utils/helper";
 
 const MovieDetail = () => {
