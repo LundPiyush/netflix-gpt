@@ -1,25 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useMovieDetails from "../hooks/useMovieDetails";
 import { formatTime } from "../utils/formatTime";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faBookmark, faStar, faList } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faBookmark, faStar, faList, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 import { IMG_CDN_URL } from "../utils/constants";
 import RecommendedMovies from "./RecommendedMovies";
 import MovieCast from "./MovieCast";
 import VideoBackground from "./VideoBackground";
 import { toggleMovieTrailer } from "../utils/movieDetailsSlice/movieDetailsSlice";
-import { addMovieInWatchList, removeMovieFromWatchList } from "../utils/userSlice/userSlice";
-import { isMovieInWatchlist } from "../utils/helper";
+import {
+  addMovieInLikesList,
+  addMovieInWatchList,
+  removeMovieFromLikesList,
+  removeMovieFromWatchList,
+  addRating,
+  resetRating,
+} from "../utils/userSlice/userSlice";
+import { findRating, isMovieInLikesList, isMovieInWatchlist } from "../utils/helper";
+import { Tooltip } from "react-tooltip";
+import { Rating } from "react-simple-star-rating";
 
 const MovieDetail = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const { movieId } = useParams();
   useMovieDetails(movieId);
   const movie = useSelector((store) => store.movieDetails.selectedMovie);
   const playMovieTrailer = useSelector((store) => store.movieDetails.playMovieTrailer);
-  const watchList = useSelector((store) => store.user.watchList);
+  const { watchList, likesList, ratings } = useSelector((store) => store.user);
+
   if (!movie) return;
   const {
     id,
@@ -34,17 +45,30 @@ const MovieDetail = () => {
     runtime,
     genres,
   } = movie;
+
+  // toggle movie trailer
   const handlePlayTrailer = () => {
     dispatch(toggleMovieTrailer());
   };
+
+  // add to watch list if movie is not present in watch list
   const addToWatchList = () => {
-    // add to watch list if movie is not present in watch list
     if (!isMovieInWatchlist(watchList, movieId)) {
       dispatch(addMovieInWatchList(movie));
     } else {
       dispatch(removeMovieFromWatchList({ id: movieId }));
     }
   };
+
+  // add to likes list if movie is not present in watch list
+  const addToLikesList = () => {
+    if (!isMovieInLikesList(likesList, movieId)) {
+      dispatch(addMovieInLikesList(movie));
+    } else {
+      dispatch(removeMovieFromLikesList({ id: movieId }));
+    }
+  };
+
   return (
     <>
       <div className="h-full w-screen relative bg-black">
@@ -68,24 +92,66 @@ const MovieDetail = () => {
               <p className="text-sm md:text-xl font-bold mr-2">{formatTime(runtime)}</p>
             </div>
             <p className="text-sm md:text-xl font-bold md:hidden">{genres?.map((obj) => obj.name).join(", ")} </p>
-            <div className="flex my-4">
+            <div className="flex my-4 md:my-10">
               <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
                 <FontAwesomeIcon icon={faList} />
               </button>
-              <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
-                <FontAwesomeIcon icon={faHeart} />
+              <Tooltip id="likes-icon" place="bottom" />
+              <button
+                data-tooltip-id="likes-icon"
+                data-tooltip-content={isMovieInLikesList(likesList, movieId) ? "Dislike" : "Mark as favourite"}
+                className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11"
+                onClick={addToLikesList}>
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  style={{ color: isMovieInLikesList(likesList, movieId) ? "#E50914" : "#FFFFFF" }}
+                />
               </button>
-              <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11" onClick={addToWatchList}>
+              <Tooltip id="bookmark-icon" place="bottom" />
+              <button
+                data-tooltip-id="bookmark-icon"
+                data-tooltip-content={
+                  isMovieInWatchlist(watchList, movieId) ? "Remove from watch list" : "Add to your watch list"
+                }
+                className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11"
+                onClick={addToWatchList}>
                 <FontAwesomeIcon
                   icon={faBookmark}
                   style={{ color: isMovieInWatchlist(watchList, movieId) ? "#E50914" : "#FFFFFF" }}
                 />
               </button>
-              <button className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
+              {!isOpen && <Tooltip id="star-icon" place="bottom" />}
+              <button
+                onClick={() => setIsOpen((prev) => !prev)}
+                data-tooltip-id="star-icon"
+                data-tooltip-content="Rate it!"
+                className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
                 <FontAwesomeIcon icon={faStar} />
               </button>
+
+              {isOpen ? (
+                <div className="relative">
+                  <div className="absolute flex -bottom-8 md:-bottom-12 -left-16 md:-left-20 right-0 bg-gray-600 text-black min-w-44 md:min-w-48 md:p-2 rounded-lg">
+                    <button className="px-2" onClick={() => dispatch(resetRating({ movie_id: id }))}>
+                      <FontAwesomeIcon icon={faArrowsRotate} style={{ color: "#FFFFFF" }} />
+                    </button>
+                    <Rating
+                      allowFraction
+                      fillColor="orange"
+                      iconsCount={5}
+                      initialValue={findRating(ratings, id)}
+                      onClick={(value) => dispatch(addRating({ movie_id: id, movie_rating: value }))}
+                      emptyColor="white"
+                      size={30}
+                      SVGstyle={{ display: "inline" }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
-            <p className="text-lg md:text-xl italic">{tagline}</p>
+            <p className="text-lg md:text-xl italic truncate-ellipsis">{tagline}</p>
             <div className="flex flex-col md:mt-4">
               <p className="text-lg md:text-xl font-bold hidden md:inline-block">Overview</p>
               <p className="hidden md:inline-block py-2 text-lg w-2/4">{overview}</p>
