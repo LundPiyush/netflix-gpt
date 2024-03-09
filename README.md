@@ -23,6 +23,5 @@
 # TO do :
 
 1. fix the height for movie on browse page
-2. fix the genre on movie detail page
-3. back btn on movie detail page
-4. actions(addtoList,watchlist,wishlist) on movie detail page
+2. back btn on movie detail page (click on netflix logo)
+3. build Tv and categories

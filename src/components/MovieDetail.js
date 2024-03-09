@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useMovieDetails from "../hooks/useMovieDetails";
@@ -21,15 +21,21 @@ import {
 import { findRating, isMovieInLikesList, isMovieInWatchlist } from "../utils/helper";
 import { Tooltip } from "react-tooltip";
 import { Rating } from "react-simple-star-rating";
+import useOutsideClick from "../hooks/useOutsideClick";
 
 const MovieDetail = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef();
   const dispatch = useDispatch();
   const { movieId } = useParams();
   useMovieDetails(movieId);
   const movie = useSelector((store) => store.movieDetails.selectedMovie);
   const playMovieTrailer = useSelector((store) => store.movieDetails.playMovieTrailer);
   const { watchList, likesList, ratings } = useSelector((store) => store.user);
+
+  useOutsideClick(ref, () => {
+    if (isOpen) setIsOpen(false);
+  });
 
   if (!movie) return;
   const {
@@ -128,9 +134,11 @@ const MovieDetail = () => {
                 className="mr-4 bg-gray-600 rounded-full w-8 h-8 md:w-11 md:h-11">
                 <FontAwesomeIcon icon={faStar} />
               </button>
-
               {isOpen ? (
-                <div className="relative">
+                <div
+                  className="relative"
+                  //ref={ref}
+                >
                   <div className="absolute flex -bottom-8 md:-bottom-12 -left-16 md:-left-20 right-0 bg-gray-600 text-black min-w-44 md:min-w-48 md:p-2 rounded-lg">
                     <button className="px-2" onClick={() => dispatch(resetRating({ movie_id: id }))}>
                       <FontAwesomeIcon icon={faArrowsRotate} style={{ color: "#FFFFFF" }} />
