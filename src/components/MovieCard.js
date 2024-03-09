@@ -10,7 +10,7 @@ const MovieCard = ({ posterPath, id, isLarge, backdropPath }) => {
     <Link to={`/movie/${id}`}>
       <div
         className={`pr-4 transition-transform duration-450 hover:scale-105 ${
-          isLarge ? "w-36 md:w-48" : "w-48 md:w-60"
+          isLarge ? "w-36 md:w-48" : "w-52 md:w-64"
         }  `}>
         <img
           className={isLarge ? "min-h-52" : "min-h-32"}
