@@ -10,6 +10,7 @@ const MovieCard = ({ posterPath, id, isLarge, backdropPath }) => {
     <Link to={`/movie/${id}`}>
       <div className="pr-4 w-36 md:w-48 transition-transform duration-450 hover:scale-105">
         <img
+          className={isLarge ? "min-h-52" : "min-h-40"}
           src={IMG_CDN_URL + imgPath}
           //src="https://m.media-amazon.com/images/M/MV5BZWIyNzE3NzEtMGExNS00ZjRkLWJmMTYtMWFlNTNkNDgyNWUzXkEyXkFqcGdeQXVyODUwMzI5ODk@._V1_.jpg"
           alt="movie"
